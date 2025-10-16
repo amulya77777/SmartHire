@@ -1,4 +1,4 @@
-# Job Portal  job-hunt-opal.vercel.app/
+# Job Portal  [live link](https://job-hunt-opal.vercel.app/)
 
 Job Portal is a **MERN Stack** based web application designed to streamline the employment process. It allows users to choose their role as either an **applicant** or **recruiter**, and create an account. The app provides persistent login sessions and secures REST APIs using **JWT token verification**.
 
