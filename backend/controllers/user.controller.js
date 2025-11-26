@@ -8,13 +8,40 @@ export const register = async (req, res) => {
     try {
         const { fullname, email, phoneNumber, password, role } = req.body;
          
-        if (!fullname || !email || !phoneNumber || !password || !role) {
+        // Check for missing required fields
+        const missingFields = [];
+        if (!fullname) missingFields.push('fullname');
+        if (!email) missingFields.push('email');
+        if (!phoneNumber) missingFields.push('phoneNumber');
+        if (!password) missingFields.push('password');
+        if (!role) missingFields.push('role');
+        
+        if (missingFields.length > 0) {
             return res.status(400).json({
-                message: "Something is missing",
+                message: `Missing required fields: ${missingFields.join(', ')}`,
                 success: false
             });
-        };
+        }
+        
+        // Normalize and validate role
+        const normalizedRole = role.toLowerCase().trim();
+        const validRoles = ['student', 'recruiter'];
+        if (!validRoles.includes(normalizedRole)) {
+            return res.status(400).json({
+                message: `Invalid role. Role must be one of: ${validRoles.join(', ')}`,
+                success: false
+            });
+        }
+        
+        // Check if file is provided
         const file = req.file;
+        if (!file) {
+            return res.status(400).json({
+                message: "Profile photo is required",
+                success: false
+            });
+        }
+        
         const fileUri = getDataUri(file);
         const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
 
@@ -32,7 +59,7 @@ export const register = async (req, res) => {
             email,
             phoneNumber,
             password: hashedPassword,
-            role,
+            role: normalizedRole,
             profile:{
                 profilePhoto:cloudResponse.secure_url,
             }
@@ -44,18 +71,33 @@ export const register = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }
 export const login = async (req, res) => {
     try {
         const { email, password, role } = req.body;
         
-        if (!email || !password || !role) {
+        // Check for missing required fields
+        const missingFields = [];
+        if (!email) missingFields.push('email');
+        if (!password) missingFields.push('password');
+        if (!role) missingFields.push('role');
+        
+        if (missingFields.length > 0) {
             return res.status(400).json({
-                message: "Something is missing",
+                message: `Missing required fields: ${missingFields.join(', ')}`,
                 success: false
             });
-        };
+        }
+        
+        // Normalize role for comparison
+        const normalizedRole = role.toLowerCase().trim();
+        
         let user = await User.findOne({ email });
         if (!user) {
             return res.status(400).json({
@@ -71,7 +113,7 @@ export const login = async (req, res) => {
             })
         };
         // check role is correct or not
-        if (role !== user.role) {
+        if (normalizedRole !== user.role) {
             return res.status(400).json({
                 message: "Account doesn't exist with current role.",
                 success: false
@@ -99,6 +141,11 @@ export const login = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }
 export const logout = async (req, res) => {
@@ -109,6 +156,11 @@ export const logout = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }
 export const updateProfile = async (req, res) => {
@@ -116,9 +168,13 @@ export const updateProfile = async (req, res) => {
         const { fullname, email, phoneNumber, bio, skills } = req.body;
         
         const file = req.file;
-        // cloudinary ayega idhar
-        const fileUri = getDataUri(file);
-        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        let cloudResponse = null;
+        
+        // Only process file if it's provided
+        if (file) {
+            const fileUri = getDataUri(file);
+            cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        }
 
 
 
@@ -167,5 +223,10 @@ export const updateProfile = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }

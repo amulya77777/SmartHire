@@ -6,21 +6,61 @@ export const postJob = async (req, res) => {
         const { title, description, requirements, salary, location, jobType, experience, position, companyId } = req.body;
         const userId = req.id;
 
-        if (!title || !description || !requirements || !salary || !location || !jobType || !experience || !position || !companyId) {
+        // Check for missing required fields
+        const missingFields = [];
+        if (!title) missingFields.push('title');
+        if (!description) missingFields.push('description');
+        if (!requirements) missingFields.push('requirements');
+        if (!salary) missingFields.push('salary');
+        if (!location) missingFields.push('location');
+        if (!jobType) missingFields.push('jobType');
+        if (!experience) missingFields.push('experience');
+        if (!position) missingFields.push('position');
+        if (!companyId) missingFields.push('companyId');
+
+        if (missingFields.length > 0) {
             return res.status(400).json({
-                message: "Somethin is missing.",
+                message: `Missing required fields: ${missingFields.join(', ')}`,
                 success: false
-            })
-        };
+            });
+        }
+
+        // Validate and convert salary to number
+        const salaryNumber = Number(salary);
+        if (isNaN(salaryNumber) || salaryNumber <= 0) {
+            return res.status(400).json({
+                message: "Salary must be a valid positive number",
+                success: false
+            });
+        }
+
+        // Validate and convert experience to number
+        const experienceNumber = Number(experience);
+        if (isNaN(experienceNumber) || experienceNumber < 0) {
+            return res.status(400).json({
+                message: "Experience must be a valid non-negative number",
+                success: false
+            });
+        }
+
+        // Validate and convert position to number
+        const positionNumber = Number(position);
+        if (isNaN(positionNumber) || positionNumber <= 0) {
+            return res.status(400).json({
+                message: "Position must be a valid positive number",
+                success: false
+            });
+        }
+
         const job = await Job.create({
             title,
             description,
             requirements: requirements.split(","),
-            salary: Number(salary),
+            salary: salaryNumber,
             location,
             jobType,
-            experienceLevel: experience,
-            position,
+            experienceLevel: experienceNumber,
+            position: positionNumber,
             company: companyId,
             created_by: userId
         });
@@ -31,6 +71,11 @@ export const postJob = async (req, res) => {
         });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }
 // student k liye
@@ -46,7 +91,7 @@ export const getAllJobs = async (req, res) => {
         const jobs = await Job.find(query).populate({
             path: "company"
         }).sort({ createdAt: -1 });
-        if (!jobs || jobs.length === 0) {
+        if (!jobs) {
             return res.status(404).json({
                 message: "Jobs not found.",
                 success: false
@@ -58,6 +103,11 @@ export const getAllJobs = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }
 // student
@@ -76,6 +126,11 @@ export const getJobById = async (req, res) => {
         return res.status(200).json({ job, success: true });
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }
 // admin kitne job create kra hai abhi tk
@@ -86,7 +141,7 @@ export const getAdminJobs = async (req, res) => {
             path:'company',
             createdAt:-1
         });
-        if (!jobs || jobs.length === 0) {
+        if (!jobs) {
             return res.status(404).json({
                 message: "Jobs not found.",
                 success: false
@@ -98,5 +153,10 @@ export const getAdminJobs = async (req, res) => {
         })
     } catch (error) {
         console.log(error);
+        return res.status(500).json({
+            message: "Internal server error",
+            success: false,
+            error: error.message
+        });
     }
 }

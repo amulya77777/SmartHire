@@ -6,7 +6,7 @@ import { Company } from "../models/company.model.js";
 import { Job } from "../models/job.model.js";
 import { Application } from "../models/application.model.js";
 
-dotenv.config({ path: './.env' });
+dotenv.config();
 
 const seedDatabase = async () => {
   try {
