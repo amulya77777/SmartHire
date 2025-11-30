@@ -20,7 +20,7 @@ const backendPort = getBackendPort();
 
 export default defineConfig({
   plugins: [react()],
-  // base: import.meta.env.VITE_API_KEY || "SmartHire#",
+  base: import.meta.env.VITE_API_KEY || "SmartHire#",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
