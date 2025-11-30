@@ -18,6 +18,12 @@ module.exports = {
     },
     extend: {
       colors: {
+        // New color palette
+        beige: "#EFECE3",
+        "light-blue": "#8FABD4",
+        blue: "#4A70A9",
+        black: "#000000",
+        // Existing theme colors
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

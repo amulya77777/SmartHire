@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Navbar from "../shared/Navbar";
 import { Label } from "../ui/label";
 import { Input } from "../ui/input";
-import { RadioGroup } from "../ui/radio-group";
+import { RadioGroup, RadioGroupItem } from "../ui/radio-group";
 import { Button } from "../ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -84,28 +84,18 @@ const Login = () => {
             />
           </div>
           <div className="flex items-center justify-between">
-            <RadioGroup className="flex items-center gap-4 my-5">
+            <RadioGroup 
+              value={input.role} 
+              onValueChange={(value) => setInput({ ...input, role: value })}
+              className="flex items-center gap-4 my-5"
+            >
               <div className="flex items-center space-x-2">
-                <Input
-                  type="radio"
-                  name="role"
-                  value="student"
-                  checked={input.role === "student"}
-                  onChange={changeEventHandler}
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="r1">Student</Label>
+                <RadioGroupItem value="student" id="r1" />
+                <Label htmlFor="r1" className="cursor-pointer">Student</Label>
               </div>
               <div className="flex items-center space-x-2">
-                <Input
-                  type="radio"
-                  name="role"
-                  value="recruiter"
-                  checked={input.role === "recruiter"}
-                  onChange={changeEventHandler}
-                  className="cursor-pointer"
-                />
-                <Label htmlFor="r2">Recruiter</Label>
+                <RadioGroupItem value="recruiter" id="r2" />
+                <Label htmlFor="r2" className="cursor-pointer">Recruiter</Label>
               </div>
             </RadioGroup>
           </div>

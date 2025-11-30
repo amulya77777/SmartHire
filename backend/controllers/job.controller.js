@@ -25,11 +25,10 @@ export const postJob = async (req, res) => {
             });
         }
 
-        // Validate and convert salary to number
-        const salaryNumber = Number(salary);
-        if (isNaN(salaryNumber) || salaryNumber <= 0) {
+        // Validate salary as string
+        if (typeof salary !== 'string' || salary.trim().length === 0) {
             return res.status(400).json({
-                message: "Salary must be a valid positive number",
+                message: "Salary must be a valid non-empty string",
                 success: false
             });
         }
@@ -56,7 +55,7 @@ export const postJob = async (req, res) => {
             title,
             description,
             requirements: requirements.split(","),
-            salary: salaryNumber,
+            salary: salary.trim(),
             location,
             jobType,
             experienceLevel: experienceNumber,

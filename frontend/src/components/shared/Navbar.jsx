@@ -30,12 +30,24 @@ const Navbar = () => {
       toast.error(error.response.data.message);
     }
   };
+
+  const handleLogoClick = () => {
+    // Navigate to dashboard based on user role
+    if (user && user.role === "recruiter") {
+      navigate("/admin/companies");
+    } else {
+      navigate("/");
+    }
+  };
   return (
     <div className="bg-white">
       <div className="flex items-center justify-between mx-auto max-w-7xl h-16">
         <div>
-          <h1 className="text-2xl font-bold">
-            Smart<span className="text-[#F83002]">Hire</span>
+          <h1 
+            onClick={handleLogoClick}
+            className="text-2xl font-bold cursor-pointer hover:opacity-80 transition-opacity"
+          >
+            Smart<span className="text-blue">Hire</span>
           </h1>
         </div>
         <div className="flex items-center gap-12">
@@ -69,7 +81,7 @@ const Navbar = () => {
                 <Button variant="outline">Login</Button>
               </Link>
               <Link to="/signup">
-                <Button className="bg-[#6A38C2] hover:bg-[#5b30a6]">
+                <Button className="bg-blue hover:bg-blue/90 text-beige">
                   Signup
                 </Button>
               </Link>

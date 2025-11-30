@@ -3,9 +3,18 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import mongoose from "mongoose";
 
 export const register = async (req, res) => {
     try {
+        // Check database connection
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({
+                message: "Database connection not available. Please check your MongoDB connection.",
+                success: false
+            });
+        }
+
         const { fullname, email, phoneNumber, password, role } = req.body;
          
         // Check for missing required fields
@@ -54,7 +63,7 @@ export const register = async (req, res) => {
         }
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        await User.create({
+        const newUser = await User.create({
             fullname,
             email,
             phoneNumber,
@@ -65,12 +74,24 @@ export const register = async (req, res) => {
             }
         });
 
+        console.log('✅ User created successfully:', newUser.email);
+
         return res.status(201).json({
             message: "Account created successfully.",
             success: true
         });
     } catch (error) {
-        console.log(error);
+        console.error('❌ Registration error:', error);
+        
+        // Handle specific MongoDB errors
+        if (error.name === 'MongoServerError' || error.name === 'MongooseError') {
+            return res.status(503).json({
+                message: "Database connection error. Please check your MongoDB configuration.",
+                success: false,
+                error: error.message
+            });
+        }
+        
         return res.status(500).json({
             message: "Internal server error",
             success: false,
@@ -80,6 +101,14 @@ export const register = async (req, res) => {
 }
 export const login = async (req, res) => {
     try {
+        // Check database connection
+        if (mongoose.connection.readyState !== 1) {
+            return res.status(503).json({
+                message: "Database connection not available. Please check your MongoDB connection.",
+                success: false
+            });
+        }
+
         const { email, password, role } = req.body;
         
         // Check for missing required fields
@@ -140,7 +169,17 @@ export const login = async (req, res) => {
             success: true
         })
     } catch (error) {
-        console.log(error);
+        console.error('❌ Login error:', error);
+        
+        // Handle specific MongoDB errors
+        if (error.name === 'MongoServerError' || error.name === 'MongooseError') {
+            return res.status(503).json({
+                message: "Database connection error. Please check your MongoDB configuration.",
+                success: false,
+                error: error.message
+            });
+        }
+        
         return res.status(500).json({
             message: "Internal server error",
             success: false,

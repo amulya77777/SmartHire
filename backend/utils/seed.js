@@ -60,14 +60,14 @@ const seedDatabase = async () => {
     // Create Jobs
     const jobs = await Job.create([
       // Tech Solutions Inc. Jobs
-      { title: "Frontend Developer", description: "Develop and maintain our web applications.", requirements: ["React", "CSS", "HTML"], salary: 85000, experienceLevel: 2, location: "Remote", jobType: "Full-time", position: 3, company: company1._id, created_by: recruiter1._id },
-      { title: "Backend Developer", description: "Work on our server-side logic and database.", requirements: ["Node.js", "Express", "MongoDB"], salary: 95000, experienceLevel: 3, location: "San Francisco, CA", jobType: "Full-time", position: 2, company: company1._id, created_by: recruiter1._id },
+      { title: "Frontend Developer", description: "Develop and maintain our web applications.", requirements: ["React", "CSS", "HTML"], salary: "8.5 LPA", experienceLevel: 2, location: "Remote", jobType: "Full-time", position: 3, company: company1._id, created_by: recruiter1._id },
+      { title: "Backend Developer", description: "Work on our server-side logic and database.", requirements: ["Node.js", "Express", "MongoDB"], salary: "9.5 LPA", experienceLevel: 3, location: "San Francisco, CA", jobType: "Full-time", position: 2, company: company1._id, created_by: recruiter1._id },
       // Innovate LLC Jobs
-      { title: "Data Scientist", description: "Analyze large datasets to extract meaningful insights.", requirements: ["Python", "R", "SQL"], salary: 120000, experienceLevel: 4, location: "New York, NY", jobType: "Full-time", position: 1, company: company2._id, created_by: recruiter2._id },
-      { title: "UX/UI Designer", description: "Design user-friendly interfaces for our products.", requirements: ["Figma", "Sketch", "User Research"], salary: 75000, experienceLevel: 2, location: "Remote", jobType: "Contract", position: 5, company: company2._id, created_by: recruiter2._id },
+      { title: "Data Scientist", description: "Analyze large datasets to extract meaningful insights.", requirements: ["Python", "R", "SQL"], salary: "12 LPA", experienceLevel: 4, location: "New York, NY", jobType: "Full-time", position: 1, company: company2._id, created_by: recruiter2._id },
+      { title: "UX/UI Designer", description: "Design user-friendly interfaces for our products.", requirements: ["Figma", "Sketch", "User Research"], salary: "7.5 LPA", experienceLevel: 2, location: "Remote", jobType: "Contract", position: 5, company: company2._id, created_by: recruiter2._id },
       // Green Energy Corp Jobs
-      { title: "DevOps Engineer", description: "Manage and improve our CI/CD pipeline.", requirements: ["AWS", "Docker", "Kubernetes"], salary: 110000, experienceLevel: 3, location: "Austin, TX", jobType: "Full-time", position: 2, company: company3._id, created_by: recruiter3._id },
-      { title: "Marketing Manager", description: "Lead our marketing campaigns and strategies.", requirements: ["SEO", "Content Marketing", "Social Media"], salary: 80000, experienceLevel: 4, location: "Austin, TX", jobType: "Full-time", position: 1, company: company3._id, created_by: recruiter3._id },
+      { title: "DevOps Engineer", description: "Manage and improve our CI/CD pipeline.", requirements: ["AWS", "Docker", "Kubernetes"], salary: "11 LPA", experienceLevel: 3, location: "Austin, TX", jobType: "Full-time", position: 2, company: company3._id, created_by: recruiter3._id },
+      { title: "Marketing Manager", description: "Lead our marketing campaigns and strategies.", requirements: ["SEO", "Content Marketing", "Social Media"], salary: "8 LPA", experienceLevel: 4, location: "Austin, TX", jobType: "Full-time", position: 1, company: company3._id, created_by: recruiter3._id },
     ]);
     console.log("Created jobs.");
 
