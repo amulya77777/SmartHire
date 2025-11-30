@@ -1,5 +1,6 @@
-# Job Portal 
-Job Portal is a **MERN Stack** based web application designed to streamline the employment process. It allows users to choose their role as either an **applicant** or **recruiter**, and create an account. The app provides persistent login sessions and secures REST APIs using **JWT token verification**.
+# SmartHire
+
+SmartHire is a **MERN Stack** based web application designed to streamline the employment process. It allows users to choose their role as either an **applicant** or **recruiter**, and create an account. The app provides persistent login sessions and secures REST APIs using **JWT token verification**.
 
 Once logged in:
 
