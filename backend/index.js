@@ -25,7 +25,8 @@ const corsOptions = {
     "https://smart-hire-instant.vercel.app",
     "https://smat-hire-instant.vercel.app",
     "https://smart-hire-three.vercel.app",
-    "https://job-hunt-opal.vercel.app"
+    "https://job-hunt-opal.vercel.app",
+    "https://smarthireinstant.netlify.app"
   ],
   credentials: true,
 };
