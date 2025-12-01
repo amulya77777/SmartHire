@@ -45,9 +45,14 @@ app.use("/", (req, res) => {
   res.send("Welcome to SmartHire Backend API");
 });
 
-// app.listen(PORT, () => {
-// connectDB();
-// console.log(`Server running at port ${PORT}`);
-// });
+
+const start = async () => {
+  await connectDB();        // yaha MONGO_URI use hoga
+  app.listen(PORT, () => {
+    console.log(`Server running at port ${PORT}`);
+  });
+};
+
+start();
 
 export default app;
