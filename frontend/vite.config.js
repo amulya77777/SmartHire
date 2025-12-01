@@ -65,7 +65,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     // Use 'env.VITE_API_KEY' instead of 'import.meta.env.VITE_API_KEY'
-    base: env.VITE_API_KEY || "/SmartHire/", // Changed fallback to valid path syntax
+    // base: env.VITE_API_KEY || "/SmartHire/", // Changed fallback to valid path syntax
     resolve: {
       alias: {
         "@": path.resolve(__dirname, "./src"),
