@@ -25,7 +25,7 @@ const corsOptions = {
     "https://smart-hire-three.vercel.app//api/user/",
     "https://smart-hire-three.vercel.app//api/job/",
     "https://smart-hire-three.vercel.app//api/company/",
-    "https://smart-hire-three.vercel.app//api/application/",    
+    "https://smart-hire-three.vercel.app//api/application/"  
   ],
   credentials: true,
 };
