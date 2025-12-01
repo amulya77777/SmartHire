@@ -38,7 +38,8 @@ app.use("/", (req, res) => {
   res.send("Welcome to SmartHire Backend API");
 });
 
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Server running at port ${PORT}`);
-});
+// app.listen(PORT, () => {
+//   connectDB();
+//   console.log(`Server running at port ${PORT}`);
+// });
+export default app;
