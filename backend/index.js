@@ -21,7 +21,8 @@ const corsOptions = {
     "http://localhost:5173",
     "http://localhost:3000",
     "http://localhost:8000",
-    "https://smat-hire-instant.vercel.app/"
+    "https://smat-hire-instant.vercel.app/",
+    "https://smart-hire-instant.vercel.app/"
   ],
   credentials: true,
 };
