@@ -16,9 +16,3 @@ router.route("/logout").get(logout);
 router
   .route("/profile/update")
   .post(isAuthenticated, singleUpload, updateProfile);
-router.route("/").get((req, res) => {
-  res.send({
-    activeStatus: true,
-    error: false,
-  });
-});
